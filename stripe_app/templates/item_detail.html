@@ -1,0 +1,30 @@
+<!-- myapp/templates/item_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ item.name }}</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>{{ item.name }}</h1>
+    <p>{{ item.description }}</p>
+    <p>Price: {{ item.price }} {{ item.currency }}</p>
+    
+    <button onclick="buyItem({{ item.id }})">Buy Now</button>
+
+  
+    <script>
+        function buyItem(itemId) {
+            fetch(`/buy/${itemId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    const stripe = Stripe('pk_test_51OUvWCBEkrfUO8LDHtFZFIrqCvt6cNiGv1SOhOiTEyaKyYesDKFf80f7vNm3rRisTCxRgtqdaqBepBi41CoSYKyf00b2F25wza');
+                    stripe.redirectToCheckout({ sessionId: data.session_id });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

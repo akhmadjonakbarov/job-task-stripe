@@ -1,0 +1,23 @@
+<!-- myapp/templates/all_items.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Items</title>
+</head>
+<body>
+    <h1>All Items</h1>
+    
+    <ul>
+        {% for item in items %}
+            <li>
+                <strong>{{ item.name }}</strong><br>
+                Description: {{ item.description }}<br>
+                Price: {{ item.price }} {{ item.currency }}<br>
+                <a href="{% url 'item_detail' item.id %}">Details</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
